@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "KamataEngine.h"
 #include "TitleScene.h"
+#include"Tutorial.h"
 #include <Windows.h>
 
 using namespace KamataEngine;
@@ -12,6 +13,7 @@ enum class Scene
 {
 	kUnknown = 0,
 	kTitle,
+	kTutorial,
 	kGame,
 };
 Scene scene = Scene::kUnknown;
@@ -21,6 +23,8 @@ void UpdateScene();
 void DrawScene();
 // タイトルシーンの生成
 TitleScene* titleScene = nullptr;
+//チュートリアルシーンの生成
+Tutorial* tutorial = nullptr;
 // ゲームシーンのインスタンス生成
 GameScene* gameScene = nullptr;
 
@@ -38,6 +42,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	// タイトルシーンの初期化
 	titleScene->Initialize();
 
+
+	//チュートリアルシーンの初期化
+	tutorial->Initialize();
 	/*
 
 	//ゲームシーンの初期化
@@ -80,6 +87,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	// タイトルシーンの解放
 	delete titleScene;
 
+	//チュートリアルシーンの解放
+	delete tutorial;
+
 	// ゲームシーンの解放
 	delete gameScene;
 
@@ -94,11 +104,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 
 void UpdateScene() 
 {
-
 	switch (scene)
 	{
 	case Scene::kTitle:
 		titleScene->Update();
+		break;
+	case Scene::kTutorial:
+		tutorial->Update();
 		break;
 	case Scene::kGame:
 		gameScene->Update();
@@ -114,15 +126,37 @@ void ChangeScene()
 	case Scene::kTitle:
 		if (titleScene->IsFinished())
 		{
-
 			// シーンの変更
 			scene = Scene::kGame;
+			// シーンの変更
+			scene = Scene::kTutorial;
 			// 旧シーンの解放
 			delete titleScene;
 			titleScene = nullptr;
+			
 			// 新シーンの生成と初期化
 			gameScene = new GameScene();
 			gameScene->Initialize();
+
+			
+			// 新シーンの生成と初期化
+			tutorial = new Tutorial();
+			tutorial->Initialize();
+		}
+		break;
+	case Scene::kTutorial:
+		if (tutorial->IsFinished())
+		{
+			// シーンの変更
+			scene = Scene::kTitle;
+			
+			// 旧シーンの解放
+			delete tutorial;
+			tutorial = nullptr;
+			
+			// タイトルシーンの生成と初期化
+			titleScene = new TitleScene;
+			titleScene->Initialize();
 		}
 		break;
 	case Scene::kGame:
@@ -136,9 +170,8 @@ void ChangeScene()
 			delete gameScene;
 			gameScene = nullptr;
 
-			// タイトルシーンの生成
+			// タイトルシーンの生成と初期化
 			titleScene = new TitleScene;
-			// タイトルシーンの初期化
 			titleScene->Initialize();
 		}
 		break;
@@ -152,6 +185,9 @@ void DrawScene()
 	{
 	case Scene::kTitle:
 		titleScene->Draw();
+		break;
+	case Scene::kTutorial:
+		tutorial->Draw();
 		break;
 	case Scene::kGame:
 		gameScene->Draw();

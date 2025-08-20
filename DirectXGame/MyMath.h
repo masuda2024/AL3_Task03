@@ -6,7 +6,8 @@ KamataEngine::Matrix4x4 MakeAffineMatrix(KamataEngine::Vector3& scale, KamataEng
 
 float EaseInOut(float x1, float x2, float t);
 
-struct AABB {
+struct AABB 
+{
 	KamataEngine::Vector3 min;
 	KamataEngine::Vector3 max;
 };

@@ -4,11 +4,11 @@
 #include "Fade.h"
 
 #include "Player.h"
-
-class TitleScene 
+/**/
+class Tutorial
 {
 public:
-	enum class Phase 
+	enum class Phase
 	{
 		kFadeIn,  // フェードイン
 		kMain,    // メイン部
@@ -25,7 +25,7 @@ public:
 	void Draw();
 
 	// デストラクタ
-	~TitleScene();
+	~Tutorial();
 	// void ChangeScene();
 	std::vector<std::vector<KamataEngine::WorldTransform*>> worldTransformBlocks_; // stdでエラーが起きたらKamataEngine::をいれる
 
