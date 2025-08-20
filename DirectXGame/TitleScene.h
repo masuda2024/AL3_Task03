@@ -5,9 +5,11 @@
 
 #include "Player.h"
 /**/
-class TitleScene {
+class TitleScene 
+{
 public:
-	enum class Phase {
+	enum class Phase 
+	{
 		kFadeIn,  // フェードイン
 		kMain,    // メイン部
 		kFadeOut, // フェードアウト

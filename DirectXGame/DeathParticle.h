@@ -5,7 +5,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-class DeathParticle {
+class DeathParticle
+{
 public:
 	void Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3 position);
 

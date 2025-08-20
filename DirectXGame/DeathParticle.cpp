@@ -12,14 +12,16 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
-void DeathParticle::Initialize(Model* model, Camera* camera, KamataEngine::Vector3 position) {
+void DeathParticle::Initialize(Model* model, Camera* camera, KamataEngine::Vector3 position)
+{
 	// NULLポイントチェック
 	assert(model);
 
 	model_ = model;
 
 	// textureHandle_ = textureHandle;
-	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_) {
+	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_)
+	{
 		worldTransform.translation_ = position;
 		worldTransform.rotation_.y = std::numbers::pi_v<float> / 2.0f;
 	}
@@ -29,7 +31,8 @@ void DeathParticle::Initialize(Model* model, Camera* camera, KamataEngine::Vecto
 	// worldTransform_.Initialize();
 
 	// ワールド変換の初期化
-	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_) {
+	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_) 
+	{
 		worldTransform.Initialize();
 		worldTransform.translation_ = position;
 	}
@@ -37,15 +40,18 @@ void DeathParticle::Initialize(Model* model, Camera* camera, KamataEngine::Vecto
 	color_ = {1, 1, 1, 1};
 }
 
-void DeathParticle::Update() {
+void DeathParticle::Update()
+{
 
-	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_) {
+	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_)
+	{
 		// アフィン変換行列
 		worldTransform.matWorld_ = MakeAffineMatrix(worldTransform.scale_, worldTransform.rotation_, worldTransform.translation_);
 		worldTransform.TransferMatrix(); // プレイヤーの座標の計算
 	}
 
-	for (uint32_t i = 0; i < 8; i++) {
+	for (uint32_t i = 0; i < 8; i++)
+	{
 		// 基本となる速度ベクトル
 		KamataEngine::Vector3 velocity = {kSpeed, 0, 0};
 		// 回転角を計算する
@@ -65,25 +71,30 @@ void DeathParticle::Update() {
 	objectColor_.SetColor(color_);
 
 	// 存続時間の上限に達したら
-	if (counter_ >= kDuration) {
+	if (counter_ >= kDuration) 
+	{
 		counter_ = kDuration;
 		// 終了扱いにする
 		isFinished_ = true;
 	}
 	// 終了なら何もしない
-	if (isFinished_) {
+	if (isFinished_) 
+	{
 		return;
 	}
 }
 
-void DeathParticle::Draw() {
+void DeathParticle::Draw()
+{
 
-	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_) {
+	for (KamataEngine::WorldTransform& worldTransform : WorldTransforms_)
+	{
 		model_->Draw(worldTransform, *camera_, &objectColor_);
 	}
 
 	// 終了なら何もしない
-	if (isFinished_) {
+	if (isFinished_) 
+	{
 		return;
 	}
 }

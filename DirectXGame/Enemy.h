@@ -5,7 +5,8 @@
 class MapChipField;
 class Player;
 
-class Enemy {
+class Enemy
+{
 public:
 	/**/
 	// 敵の当たり判定サイズ
@@ -18,7 +19,8 @@ public:
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
 
 	// マップとの当たり判定情報
-	struct CollisionMapInfo {
+	struct CollisionMapInfo 
+	{
 		bool ceiling = false;            // 天井衝突フラグ
 		bool langing = false;            // 着地フラグ
 		bool hitwall = false;            // 壁接触フラグ

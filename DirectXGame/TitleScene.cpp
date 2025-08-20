@@ -3,8 +3,9 @@
 #include "Player.h"
 
 using namespace KamataEngine;
-
-void TitleScene::Initialize() {
+//初期化
+void TitleScene::Initialize()
+{
 	// 3Dモデルの生成
 	model_ = Model::CreateFromOBJ("titleFont");
 	modelPlayer_ = Model::CreateFromOBJ("player");
@@ -20,12 +21,16 @@ void TitleScene::Initialize() {
 	fade_->Start(Fade::Status::FadeIn, 1.0f);
 }
 
-void TitleScene::Update() {
+//更新
+void TitleScene::Update()
+{
 
-	switch (phase_) {
+	switch (phase_) 
+	{
 	case Phase::kMain:
 		// タイトルシーンの終了条件
-		if (Input::GetInstance()->PushKey(DIK_SPACE)) {
+		if (Input::GetInstance()->PushKey(DIK_SPACE))
+		{
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
@@ -34,14 +39,16 @@ void TitleScene::Update() {
 	case Phase::kFadeIn:
 		// フェード
 		fade_->Update();
-		if (fade_->IsFinished()) {
+		if (fade_->IsFinished()) 
+		{
 			phase_ = Phase::kMain;
 		}
 		break;
 	case Phase::kFadeOut:
 		// フェード
 		fade_->Update();
-		if (fade_->IsFinished()) {
+		if (fade_->IsFinished()) 
+		{
 			finished_ = true;
 		}
 		break;
@@ -62,12 +69,16 @@ void TitleScene::Update() {
 	*/
 }
 
-void TitleScene::Draw() {
+
+//描画
+void TitleScene::Draw() 
+{
 	// DirectXCommonインスタンスの取得
-	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	
 
 	// 3Dモデル描画前処理
-	Model::PreDraw(dxCommon->GetCommandList());
+	Model::PreDraw();
 
 	// ここに3Dモデルインスタンスの描画処理を記述する
 	model_->Draw(worldTransform_, camera_);
@@ -79,7 +90,9 @@ void TitleScene::Draw() {
 	fade_->Draw();
 }
 
-TitleScene::~TitleScene() {
+//デストラクタ
+TitleScene::~TitleScene()
+{
 	// モデル
 	delete model_;
 	delete modelPlayer_;

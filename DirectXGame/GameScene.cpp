@@ -319,13 +319,13 @@ void GameScene::Draw()
 {
 
 	// DirectXCommonインスタンスの取得
-	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	Model::PreDraw(dxCommon->GetCommandList());
+	Model::PreDraw();
 
 	// 3Dモデル描画
 	//
-	// model_->Draw(worldTransform_, camera_, textureHandle_);
+	//model_->Draw(worldTransform_, camera_, textureHandle_);
 
 	// 自キャラの描画
 	if (phase_ == Phase::kPlay || phase_ == Phase::kFadeIn)

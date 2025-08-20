@@ -4,7 +4,8 @@
 
 class MapChipField;
 class Enemy;
-class Player {
+class Player 
+{
 public:
 	// デスフラグ
 	bool isDead_ = false;
@@ -21,7 +22,8 @@ public:
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
 
 	// マップとの当たり判定情報
-	struct CollisionMapInfo {
+	struct CollisionMapInfo
+	{
 		bool ceiling = false;            // 天井衝突フラグ
 		bool langing = false;            // 着地フラグ
 		bool hitwall = false;            // 壁接触フラグ
@@ -44,7 +46,8 @@ public:
 	// 着地フラグ
 
 	// 角
-	enum Corner {
+	enum Corner
+	{
 		kRightBottom, // 右下
 		kLeftBottom,  // 左下
 		kRightTop,    // 右上
@@ -76,7 +79,8 @@ public:
 	static inline const float kAttenuationWall = 0.9f;
 
 	// 左右
-	enum class LRDirection {
+	enum class LRDirection 
+	{
 		kRight,
 		kLeft,
 	};
