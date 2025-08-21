@@ -2,6 +2,7 @@
 #include "MapChipField.h"
 #include "Player.h"
 
+
 using namespace KamataEngine;
 //初期化
 void TitleScene::Initialize()
@@ -9,6 +10,13 @@ void TitleScene::Initialize()
 	// 3Dモデルの生成
 	model_ = Model::CreateFromOBJ("titleFont");
 	modelPlayer_ = Model::CreateFromOBJ("player");
+	
+	/*(仮設コード)
+	modelGameOver_ = Model::CreateFromOBJ("overFont");
+	modelGameClear_ = Model::CreateFromOBJ("clearFont");
+	*/
+	
+	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -34,7 +42,22 @@ void TitleScene::Update()
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
+
+			//finished_ = true;
+			
 		}
+
+		//Tを押してチュートリアルシーンへ分岐
+		if (Input::GetInstance()->PushKey(DIK_T)) 
+		{
+			// フェードアウト開始
+			phase_ = Phase::kFadeOut;
+			fade_->Start(Fade::Status::FadeOut, 1.0f);
+
+			//finished2_ = true;
+		}
+
+
 		break;
 	case Phase::kFadeIn:
 		// フェード
@@ -82,7 +105,7 @@ void TitleScene::Draw()
 
 	// ここに3Dモデルインスタンスの描画処理を記述する
 	model_->Draw(worldTransform_, camera_);
-	modelPlayer_->Draw(worldTransformPlayer_, camera_);
+	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
@@ -95,7 +118,7 @@ TitleScene::~TitleScene()
 {
 	// モデル
 	delete model_;
-	delete modelPlayer_;
+	//delete modelPlayer_;
 	// フェード
 	delete fade_;
 }

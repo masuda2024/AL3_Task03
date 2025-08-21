@@ -28,8 +28,8 @@ void Tutorial::Update()
 	switch (phase_)
 	{
 	case Phase::kMain:
-		// タイトルシーンの終了条件
-		if (Input::GetInstance()->PushKey(DIK_T))
+		// チュートリアルシーンの終了条件
+		if (Input::GetInstance()->PushKey(DIK_E))
 		{
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
@@ -59,10 +59,10 @@ void Tutorial::Draw()
 {
 	// 3Dモデル描画前処理
 	Model::PreDraw();
-
+	
 	// ここに3Dモデルインスタンスの描画処理を記述する
-	model_->Draw(worldTransform_, camera_);
-	modelPlayer_->Draw(worldTransformPlayer_, camera_);
+	//model_->Draw(worldTransform_, camera_);
+	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();

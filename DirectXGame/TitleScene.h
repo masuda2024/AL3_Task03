@@ -15,10 +15,23 @@ public:
 		kFadeOut, // フェードアウト
 	};
 
-	// 終了フラグ
+	//==========終了フラグ==========//
+
+
+	//ゲームシーン移行前
 	bool finished_ = false;
-	// デスフラグのgetter
+
+	
+
+	// タイトルシーンを終了
 	bool IsFinished() const { return finished_; }
+	
+	
+
+
+	//==========処理==========//
+
+
 
 	void Initialize();
 	void Update();
