@@ -171,12 +171,8 @@ void ChangeScene()
 			// 新シーンの生成と初期化
 			gameScene = new GameScene();
 			gameScene->Initialize();
-		}
-
-
-		//チュートリアルシーンへ
-		/**/
-		if (titleScene->IsFinished2())
+		} //チュートリアルシーンへ
+		else if (titleScene->IsFinished2())
 		{
 			// シーンの変更
 			scene = Scene::kTutorial;
@@ -189,16 +185,11 @@ void ChangeScene()
 			tutorial = new Tutorial();
 			tutorial->Initialize();
 		}
-        
-
-
-
-
-
 
 
 		break;
 	case Scene::kTutorial:
+
 		if (tutorial->IsFinishedTutorial())
 		{
 			// シーンの変更
@@ -214,7 +205,8 @@ void ChangeScene()
 		}
 		break;
 	case Scene::kGame:
-
+		
+		//ゲームシーンで敵に当たったら
 		if (gameScene->IsFinished())
 		{
 			// シーンの変更
@@ -232,33 +224,33 @@ void ChangeScene()
 
      /*
     case Scene::kGameOver
-		if (gameScene->IsFinished())
+		if (gameover->IsFinishedOver())
 		{
 		    // シーンの変更
-		    scene = Scene::kGameOver;
+		    scene = Scene::kTitle;
 
 		    // 旧シーンの解放
-		    delete gameScene;
-		    gameScene = nullptr;
+		    delete gameover;
+		    gameover = nullptr;
 
-		       //ゲームオーバーシーンの初期化(準備)
-			//gameover = new GamOver;
-			//gameover->Initialize();
+		    // タイトルシーンの生成と初期化
+			titleScene = new TitleScene;
+			titleScene->Initialize();
 		}
 		break;
-	case Scene::kGameOver
-		if (gameScene->IsFinished())
+	case Scene::kGameClear
+		if (gameover->IsFinishedOver())
 		{
 		    // シーンの変更
-		    scene = Scene::kGameOver;
+		    scene = Scene::kTitle;
 
 		    // 旧シーンの解放
-		    delete gameScene;
-		    gameScene = nullptr;
+		    delete gameclear;
+		    gameclear = nullptr;
 
-		    // ゲームクリアシーンの初期化(準備)
-	        // gameclear = new GamClear;
-	        // gameclear->Initialize();
+		    // タイトルシーンの生成と初期化
+			titleScene = new TitleScene;
+			titleScene->Initialize();
 		}
 		break;
      */
