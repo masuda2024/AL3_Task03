@@ -25,8 +25,10 @@ public:
 	// 描画
 	void Draw();
 
+	// 終了フラグ
+	bool finished1_ = false;
 	// デスフラグのgetter
-	bool IsFinished() const { return finished_; }
+	bool IsFinishedGame1() const { return finished1_; }
 
 private:
 	// テクスチャハンドル
@@ -109,8 +111,7 @@ private:
 	// フェーズの切り替え
 	void ChangePhase();
 
-	// 終了フラグ
-	bool finished_ = false;
+	
 
 	// フェード
 	Fade* fade_ = nullptr;

@@ -245,7 +245,7 @@ void GameScene::Update()
 		fade_->Update();
 		if (fade_->IsFinished())
 		{
-			finished_ = true;
+			finished1_ = true;
 		}
 		break;
 	}
@@ -428,7 +428,7 @@ void GameScene::ChangePhase()
 		if (deathParticles_)
 		{
 			// シーン終了
-			finished_ = true;
+			finished1_ = true;
 		}
 
 		break;
