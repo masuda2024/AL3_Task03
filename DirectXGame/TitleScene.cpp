@@ -43,7 +43,7 @@ void TitleScene::Update()
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
 
-			//finished_ = true;
+			finished_ = true;
 			
 		}
 
@@ -54,7 +54,7 @@ void TitleScene::Update()
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
 
-			//finished2_ = true;
+			finished2_ = true;
 		}
 
 

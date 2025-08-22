@@ -175,7 +175,7 @@ void ChangeScene()
 
 
 		//チュートリアルシーンへ
-		/*
+		/**/
 		if (titleScene->IsFinished2())
 		{
 			// シーンの変更
@@ -189,7 +189,7 @@ void ChangeScene()
 			tutorial = new Tutorial();
 			tutorial->Initialize();
 		}
-        */
+        
 
 
 
@@ -199,7 +199,7 @@ void ChangeScene()
 
 		break;
 	case Scene::kTutorial:
-		if (tutorial->IsFinished())
+		if (tutorial->IsFinishedTutorial())
 		{
 			// シーンの変更
 			scene = Scene::kTitle;

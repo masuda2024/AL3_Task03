@@ -20,12 +20,15 @@ public:
 
 	//ゲームシーン移行前
 	bool finished_ = false;
+	// チュートリアルシーン移行前
+	bool finished2_ = false;
 
-	
+
 
 	// タイトルシーンを終了
 	bool IsFinished() const { return finished_; }
 	
+	bool IsFinished2() const { return finished2_; }
 	
 
 

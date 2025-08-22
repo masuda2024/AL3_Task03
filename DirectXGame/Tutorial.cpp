@@ -49,7 +49,7 @@ void Tutorial::Update()
 		fade_->Update();
 		if (fade_->IsFinished())
 		{
-			finished_ = true;
+			finishedTutorial_ = true;
 		}
 		break;
 	}

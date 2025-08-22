@@ -16,9 +16,9 @@ public:
 	};
 
 	// 終了フラグ
-	bool finished_ = false;
+	bool finishedTutorial_ = false;
 	// デスフラグのgetter
-	bool IsFinished() const { return finished_; }
+	bool IsFinishedTutorial() const { return finishedTutorial_; }
 
 	void Initialize();
 	void Update();
