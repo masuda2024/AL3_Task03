@@ -371,11 +371,11 @@ void GameScene::Draw()
 // 衝突判定
 void GameScene::CheckAllCollisions() 
 {
-
-#pragma region 自キャラと敵キャラの当たり判定
-
 	// 判定対象1と2の座標
 	AABB aabb1, aabb2;
+#pragma region 自キャラと敵キャラの当たり判定
+
+	
 
 	aabb1 = player_->GetAABB();
 
@@ -394,8 +394,12 @@ void GameScene::CheckAllCollisions()
 			enemy->OnCollition(player_);
 		}
 	}
-
 #pragma endregion
+
+
+
+
+
 }
 
 // フェーズ
