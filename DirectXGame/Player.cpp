@@ -530,7 +530,7 @@ AABB Player::GetAABB()
 	return aabb;
 }
 
-// 衝突応答
+//敵との衝突応答
 void Player::OnCollition(const Enemy* enemy) 
 {
 	(void)enemy;
@@ -540,4 +540,11 @@ void Player::OnCollition(const Enemy* enemy)
 
 	// ジャンプ開始
 	// velocity_ += KamataEngine::Vector3(0, kJumpAcceleration, 0);
+}
+//ゴールとの衝突応答
+void Player::OnCollitionGoal(const Goal* goal) 
+{
+	(void)goal;
+	//ゴールフラグを立てる
+	isGoal_ = true;
 }

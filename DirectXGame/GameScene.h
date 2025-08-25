@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Skydome.h"
 #include <vector>
+#include"Goal.h"
 // ゲームシーン
 
 class GameScene
@@ -29,6 +30,12 @@ public:
 	bool finished1_ = false;
 	// デスフラグのgetter
 	bool IsFinishedGame1() const { return finished1_; }
+
+
+
+	//クリアフラグ
+	bool finished2_ = false;
+	bool IsFinishedGame2() const { return finished2_; }
 
 private:
 	// テクスチャハンドル
@@ -87,6 +94,12 @@ private:
 	// Enemy* enemy_ = nullptr;
 	std::list<Enemy*> enemies_;
 
+
+	//ゴール
+	Goal* goal_ = nullptr;
+	KamataEngine::Model* modelGoal_ = nullptr;
+
+
 	// 全ての当たり判定
 	void CheckAllCollisions();
 
@@ -102,6 +115,7 @@ private:
 		kFadeIn,  // フェードイン
 		kPlay,    // ゲームプレイ
 		kDeath,   // デス演出
+		kClear,
 		kFadeOut, // フェードアウト
 	};
 

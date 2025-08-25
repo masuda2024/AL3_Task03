@@ -1,4 +1,4 @@
-#include"Goal.h"
+#include "Goal.h"
 #include "GameScene.h"
 #include "cassert"
 #include <algorithm>
@@ -35,7 +35,7 @@ AABB Goal::GetAABB()
 	return aabb;
 }
 
-void Goal::OnCollition(const Player* player) { (void)player; }
+void Goal::OnCollitionGoal(const Player* player) { (void)player; }
 
 void Goal::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3& position)
 {

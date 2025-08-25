@@ -13,3 +13,5 @@ struct AABB
 };
 
 bool IsCollition(const AABB& aabb1, const AABB& aabb2);
+
+bool IsCollitionGoal(const AABB& aabb1, const AABB& aabb3);

@@ -108,3 +108,4 @@ AABB Enemy::GetAABB()
 
 // 衝突応答
 void Enemy::OnCollition(const Player* player) { (void)player; }
+

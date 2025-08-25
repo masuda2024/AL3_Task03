@@ -23,14 +23,14 @@ public:
 		bool ceiling = false;            // 天井衝突フラグ
 		bool langing = false;            // 着地フラグ
 		bool hitwall = false;            // 壁接触フラグ
-		KamataEngine::Vector3 move = {}; // 移動量
+		//KamataEngine::Vector3 move = {}; // 移動量
 	};
 	// ワールド座標を取得
 	KamataEngine::Vector3 GetWorldPosition();
 	// AABBを取得
 	AABB GetAABB();
 	// 衝突応答
-	void OnCollition(const Player* player);
+	void OnCollitionGoal(const Player* player);
 
 	// 初期化
 	void Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3& position);

@@ -6,6 +6,7 @@
 #include "MyMath.h"
 #include "Player.h"
 #include "Skydome.h"
+#include "Goal.h"
 using namespace KamataEngine;
 
 // 初期化
@@ -34,6 +35,9 @@ void GameScene::Initialize()
 	// 敵の3Dモデルデータの生成
 	modelEnemy_ = Model::CreateFromOBJ("enemy", true);
 
+	//ゴール
+	modelGoal_ = Model::CreateFromOBJ("goal", true);
+
 	// パーティクルの3Dモデルデータの生成
 	modelParticle_ = Model::CreateFromOBJ("deathParticle", true);
 
@@ -42,8 +46,6 @@ void GameScene::Initialize()
 
 	// 敵の生成
 	// enemy_ = new Enemy();
-
-	/**/
 	for (int32_t i = 0; i < 3; i++)
 	{
 		Enemy* newEnemy = new Enemy();
@@ -52,6 +54,12 @@ void GameScene::Initialize()
 
 		enemies_.push_back(newEnemy);
 	}
+
+
+
+	//ゴールの生成
+	goal_ = new Goal();
+
 
 	// マップチップフィールドの生成
 	mapChipField_ = new MapChipField;
@@ -65,6 +73,13 @@ void GameScene::Initialize()
 	// パーティクル
 	deathParticles_ = new DeathParticle();
 	deathParticles_->Initialize(modelParticle_, &camera_, playerPosition);
+
+
+
+	//ゴールの座標
+	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(1, 100);
+	goal_->Initialize(modelGoal_, &camera_, goalPosition);
+
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
@@ -206,6 +221,12 @@ void GameScene::Update()
 			deathParticles_ = new DeathParticle();
 			deathParticles_->Initialize(modelParticle_, &camera_, deathParticlesPosition);
 		}
+		else if (player_->IsGoal() == true) 
+		{
+			phase_ = Phase::kClear;
+			// 自キャラの座標を取得
+			const KamataEngine::Vector3 deathParticlesPosition = player_->GetWorldPosition();
+		}
 		break;
 
 	case Phase::kDeath:
@@ -230,6 +251,16 @@ void GameScene::Update()
 		    finished_ = deathParticles_->isFinished_;
 		}
 		*/
+
+		break;
+
+		case Phase::kClear:
+
+
+
+		// フェードアウト開始
+	    phase_ = Phase::kFadeOut;
+	    fade_->Start(Fade::Status::FadeOut, 1.0f);
 
 		break;
 	case Phase::kFadeIn:
@@ -346,6 +377,15 @@ void GameScene::Draw()
 		enemy->Draw();
 	}
 
+
+
+
+	//ゴールの描画
+	goal_->Draw();
+
+
+
+
 	// ブロックの描画
 	for (std::vector<KamataEngine::WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) 
 	{
@@ -372,7 +412,15 @@ void GameScene::Draw()
 void GameScene::CheckAllCollisions() 
 {
 	// 判定対象1と2の座標
-	AABB aabb1, aabb2;
+
+	// aabb1 プレイヤー
+
+	// aabb2 敵
+
+	// aabb3 ゴール
+
+	AABB aabb1, aabb2, aabb3;
+	//AABB aabb1, aabb2;
 #pragma region 自キャラと敵キャラの当たり判定
 
 	
@@ -396,6 +444,26 @@ void GameScene::CheckAllCollisions()
 	}
 #pragma endregion
 
+
+
+#pragma region プレイヤーとゴールの当たり判定
+
+	
+	/**/
+    
+	Goal* goal;
+	
+	aabb3 = goal->GetAABB();
+
+	if (IsCollitionGoal(aabb1, aabb3))
+	{
+		player_->OnCollitionGoal(goal);
+		goal->OnCollitionGoal(player_);
+	}
+
+
+
+#pragma endregion
 
 
 
@@ -423,6 +491,14 @@ void GameScene::ChangePhase()
 			deathParticles_ = new DeathParticle();
 			deathParticles_->Initialize(modelParticle_, &camera_, deathParticlesPosition);
 		}
+		else if (player_->IsGoal() == true)
+		{
+			phase_ = Phase::kClear;
+			// 自キャラの座標を取得
+			const KamataEngine::Vector3 deathParticlesPosition = player_->GetWorldPosition();
+
+
+		}
 
 		break;
 
@@ -434,6 +510,12 @@ void GameScene::ChangePhase()
 			// シーン終了
 			finished1_ = true;
 		}
+
+		break;
+
+	case Phase::kClear:
+		
+		finished2_ = true;
 
 		break;
 	}
