@@ -1,7 +1,7 @@
 #include "TitleScene.h"
 #include "MapChipField.h"
 #include "Player.h"
-
+#include "Skydome.h"
 
 using namespace KamataEngine;
 //初期化
@@ -10,6 +10,17 @@ void TitleScene::Initialize()
 	// 3Dモデルの生成
 	model_ = Model::CreateFromOBJ("titleFont");
 	modelPlayer_ = Model::CreateFromOBJ("player");
+	// 3Dモデルの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	// スカイドームの生成
+	skydome_ = new Skydome();
+
+	// スカイドームの初期化
+	skydome_->Initialize(modelskydome_, textureHandle_, &camera_);
+	
+	
+	
+	
 	
 	/*(仮設コード)
 	modelGameOver_ = Model::CreateFromOBJ("overFont");
@@ -90,6 +101,8 @@ void TitleScene::Update()
 	// 自キャラの更新
 	player_->Update();
 	*/
+
+	skydome_->Update();
 }
 
 
@@ -107,6 +120,8 @@ void TitleScene::Draw()
 	model_->Draw(worldTransform_, camera_);
 	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
+	modelskydome_->Draw(worldTransformPlayer_, camera_);
+
 	// 3Dモデル描画後処理
 	Model::PostDraw();
 	// フェード
@@ -121,4 +136,6 @@ TitleScene::~TitleScene()
 	//delete modelPlayer_;
 	// フェード
 	delete fade_;
+
+	delete skydome_;
 }

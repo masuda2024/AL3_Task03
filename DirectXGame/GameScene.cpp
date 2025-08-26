@@ -34,6 +34,11 @@ void GameScene::Initialize()
 
 	// 敵の3Dモデルデータの生成
 	modelEnemy_ = Model::CreateFromOBJ("enemy", true);
+	//NEW-ENEMY
+    //modelEnemy_= Model::CreateFromOBJ("robot",true);
+
+
+
 
 	//ゴール
 	modelGoal_ = Model::CreateFromOBJ("goal", true);
@@ -77,7 +82,7 @@ void GameScene::Initialize()
 
 
 	//ゴールの座標
-	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(1, 40);
+	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(30, 18);
 	goal_->Initialize(modelGoal_, &camera_, goalPosition);
 	goal_->SetMapChipField(mapChipField_);
 

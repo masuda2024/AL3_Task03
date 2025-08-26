@@ -4,7 +4,7 @@
 #include "Fade.h"
 
 #include "Player.h"
-
+#include "Skydome.h"
 class TitleScene 
 {
 public:
@@ -56,6 +56,11 @@ public:
 
 	// マップチップフィールド
 	MapChipField* mapChipField_;
+	
+	// 天球
+	KamataEngine::Model* modelskydome_ = nullptr;
+	// キューブ
+	Skydome* skydome_ = nullptr;
 
 private:
 	// 3Dモデルデータ
