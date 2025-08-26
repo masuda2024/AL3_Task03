@@ -3,7 +3,7 @@
 #include "TitleScene.h"
 #include"Tutorial.h"
 #include"GameOver.h"
-//#include"GameClear.h"
+#include"GameClear.h"
 
 #include <Windows.h>
 
@@ -19,7 +19,7 @@ enum class Scene
 	kTutorial,
 	kGame,
 	kGameOver,
-	//kGameClear,
+	kGameClear,
 };
 Scene scene = Scene::kUnknown;
 
@@ -36,7 +36,7 @@ GameScene* gameScene = nullptr;
 // ゲームオーバーシーンの生成
 GameOver* gameover = nullptr;
 // ゲームクリアシーンの生成
-//GameClear* gameclear = nullptr;
+GameClear* gameclear = nullptr;
 
 
 
@@ -66,8 +66,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	gameover->Initialize();
 
 	// ゲームクリアシーンの初期化(準備)
-	// gameclear = new GameClear;
-	// gameclear->Initialize();
+	gameclear = new GameClear;
+	gameclear->Initialize();
 	
 	
 	/*
@@ -121,7 +121,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	delete gameover;
 
 	// ゲームクリアシーンの解放
-	//delete gameclear;
+	delete gameclear;
 
 
 	// nullptrの代入
@@ -152,11 +152,11 @@ void UpdateScene()
 	case Scene::kGameOver:
 		gameover->Update();
 		break;
-/*
+
 	case Scene::kGameClear:
 		gameclear->Update();
 		break;
-		*/
+		
 	}
 }
 
@@ -234,8 +234,6 @@ void ChangeScene()
 		    gameover = new GameOver;
 			gameover->Initialize();
 		}
-
-		/*
 		else if(gameScene->IsFinishedGame2())
 		{
 		// シーンの変更
@@ -250,15 +248,6 @@ void ChangeScene()
 		    gameclear = new GameClear;
 		    gameclear->Initialize();
 		}
-		
-		
-		
-		
-		
-		*/
-
-
-
 		break;
 
      
@@ -280,9 +269,9 @@ void ChangeScene()
 		break;
 
 
-/*
+
 	case Scene::kGameClear:
-		if (gameover->IsFinishedOver())
+		if (gameclear->IsFinishedGameClear())
 		{
 		    // シーンの変更
 		    scene = Scene::kTitle;
@@ -296,13 +285,6 @@ void ChangeScene()
 			titleScene->Initialize();
 		}
 		break;
-     */
-
-
-
-
-
-
 	}//switch (scene)
 }//void ChangeScene()
 
@@ -319,21 +301,11 @@ void DrawScene()
 	case Scene::kGame:
 		gameScene->Draw();
 		break;
-		/*
-		case Scene::kGameOver:
+    case Scene::kGameOver:
 		gameover->Draw();
-		break
-		case Scene::kGameClear:
+		break;
+	case Scene::kGameClear:
 		gameclear->Draw();
-		break
-		
-		
-		*/
-
-
-
-
-
-
+		break;
 	}
 }

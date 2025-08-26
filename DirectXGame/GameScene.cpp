@@ -378,7 +378,7 @@ void GameScene::Draw()
 	}
 
 
-
+	
 
 	//ゴールの描画
 	goal_->Draw();
@@ -427,7 +427,7 @@ void GameScene::CheckAllCollisions()
 
 	aabb1 = player_->GetAABB();
 
-	// 自キャラと敵弾全ての当たり判定
+	// 自キャラと敵全ての当たり判定
 	for (Enemy* enemy : enemies_)
 	{
 		// 敵弾の座標
@@ -449,18 +449,18 @@ void GameScene::CheckAllCollisions()
 #pragma region プレイヤーとゴールの当たり判定
 
 	
-	/**/
-    
-	Goal* goal;
 	
-	aabb3 = goal->GetAABB();
-
-	if (IsCollitionGoal(aabb1, aabb3))
+    if (goal_) // nullチェック（推奨）
 	{
-		player_->OnCollitionGoal(goal);
-		goal->OnCollitionGoal(player_);
-	}
+		aabb3 = goal_->GetAABB();
 
+		if (IsCollitionGoal(aabb1, aabb3)) 
+		{
+			player_->OnCollitionGoal(goal_);
+			goal_->OnCollitionGoal(player_);
+		}
+	}
+	
 
 
 #pragma endregion
