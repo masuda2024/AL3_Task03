@@ -77,9 +77,9 @@ void GameScene::Initialize()
 
 
 	//ゴールの座標
-	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(1, 100);
+	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(1, 40);
 	goal_->Initialize(modelGoal_, &camera_, goalPosition);
-
+	goal_->SetMapChipField(mapChipField_);
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
@@ -172,6 +172,8 @@ GameScene::~GameScene()
 	{
 		delete enemy;
 	}
+
+	delete goal_;
 
 	// delete enemy_;
 
@@ -293,6 +295,9 @@ void GameScene::Update()
 	{
 		enemy->Update();
 	}
+
+	//ゴールの更新
+	goal_->Update();
 
 	// カメラコントローラーの更新
 	cameraController_->Update();
