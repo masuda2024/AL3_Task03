@@ -9,7 +9,9 @@ void TitleScene::Initialize()
 {
 	// 3Dモデルの生成
 	model_ = Model::CreateFromOBJ("titleFont02");
-	modelPlayer_ = Model::CreateFromOBJ("player");
+	modelTitle_UI_ = Model::CreateFromOBJ("Title_UI");
+	
+	//modelPlayer_ = Model::CreateFromOBJ("Player03");
 	// 3Dモデルの生成
 	
 	// スカイドームの生成
@@ -60,7 +62,7 @@ void TitleScene::Update()
 		}
 
 		//Tを押してチュートリアルシーンへ分岐
-		if (Input::GetInstance()->PushKey(DIK_T)) 
+		if (Input::GetInstance()->PushKey(DIK_E)) 
 		{
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
@@ -119,6 +121,7 @@ void TitleScene::Draw()
 
 	// ここに3Dモデルインスタンスの描画処理を記述する
 	model_->Draw(worldTransform_, camera_);
+	modelTitle_UI_->Draw(worldTransform_, camera_);
 	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	modelskydome_->Draw(worldTransformPlayer_, camera_);
@@ -134,6 +137,7 @@ TitleScene::~TitleScene()
 {
 	// モデル
 	delete model_;
+	delete modelTitle_UI_;
 	//delete modelPlayer_;
 	// フェード
 	delete fade_;

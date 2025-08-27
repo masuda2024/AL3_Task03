@@ -30,7 +30,7 @@ void GameScene::Initialize()
 	cube_ = Model::CreateFromOBJ("block");
 
 	// 3Dモデルデータの生成
-	modelPlayer_ = Model::CreateFromOBJ("player", true);
+	modelPlayer_ = Model::CreateFromOBJ("Player003", true);
 
 	// 敵の3Dモデルデータの生成
 	//modelEnemy_ = Model::CreateFromOBJ("enemy", true);
@@ -82,7 +82,7 @@ void GameScene::Initialize()
 
 
 	//ゴールの座標
-	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(2, 18);
+	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(80, 18);
 	goal_->Initialize(modelGoal_, &camera_, goalPosition);
 	goal_->SetMapChipField(mapChipField_);
 

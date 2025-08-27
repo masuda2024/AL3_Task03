@@ -4,7 +4,7 @@
 #include "Fade.h"
 
 #include "Player.h"
-/**/
+#include "Skydome.h"
 class GameClear
 {
 public:
@@ -37,6 +37,10 @@ public:
 
 	// 自キャラ
 	Player* player_ = nullptr;
+
+	// 天球
+	KamataEngine::Model* modelskydome_ = nullptr;
+	Skydome* skydome_ = nullptr;
 
 	// マップチップフィールド
 	MapChipField* mapChipField_;

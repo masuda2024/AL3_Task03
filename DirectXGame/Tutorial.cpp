@@ -11,6 +11,13 @@ void Tutorial::Initialize()
 	// 3Dモデルの生成
 	//model_ = Model::CreateFromOBJ("titleFont");
 	//modelPlayer_ = Model::CreateFromOBJ("player");
+	
+	// スカイドームの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	skydome_ = new Skydome();
+	
+	modelTutorialUI_ = Model::CreateFromOBJ("TutorialUI");
+	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -63,7 +70,9 @@ void Tutorial::Draw()
 	// ここに3Dモデルインスタンスの描画処理を記述する
 	//model_->Draw(worldTransform_, camera_);
 	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
-
+	
+	modelskydome_->Draw(worldTransform_, camera_);
+	modelTutorialUI_->Draw(worldTransform_, camera_);
 	// 3Dモデル描画後処理
 	Model::PostDraw();
 	// フェード
@@ -74,7 +83,9 @@ Tutorial::~Tutorial()
 {
 	// モデル
 	delete model_;
+	delete modelskydome_;
 	delete modelPlayer_;
+	delete modelTutorialUI_;
 	// フェード
 	delete fade_;
 }

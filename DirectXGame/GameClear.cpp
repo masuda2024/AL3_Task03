@@ -1,6 +1,6 @@
 #include "GameClear.h"
 #include "MapChipField.h"
-
+#include "Skydome.h"
 
 using namespace KamataEngine;
 
@@ -9,9 +9,16 @@ void GameClear::Initialize()
 	// 3Dモデルの生成
 	// model_ = Model::CreateFromOBJ("titleFont");
 	// modelPlayer_ = Model::CreateFromOBJ("player");
+	
+	// スカイドームの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	skydome_ = new Skydome();
+	
 	modelGameClear_ = Model::CreateFromOBJ("GAMECLEARFont");
 	model_ = Model::CreateFromOBJ("SPACE_UI");
 	
+
+
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -65,6 +72,9 @@ void GameClear::Draw()
 	modelGameClear_->Draw(worldTransform_, camera_);
 	model_->Draw(worldTransform_, camera_);
 	
+
+	modelskydome_->Draw(worldTransform_, camera_);
+
 	// modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	// 3Dモデル描画後処理

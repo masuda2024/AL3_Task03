@@ -64,6 +64,8 @@ public:
 private:
 	// 3Dモデルデータ
 	KamataEngine::Model* model_ = nullptr;
+	KamataEngine::Model* modelTitle_UI_ = nullptr;
+	
 	// モデルプレイヤー
 	KamataEngine::Model* modelPlayer_ = nullptr;
 	// カメラ
