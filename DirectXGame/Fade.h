@@ -23,6 +23,7 @@ public:
 	void Stop();
 	// フェード終了判定
 	bool IsFinished() const;
+	bool IsFinished2() const;
 
 private:
 	// テクスチャハンドル

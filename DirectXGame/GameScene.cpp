@@ -268,7 +268,7 @@ void GameScene::Update()
 
 
 		// フェードアウト開始
-	    phase_ = Phase::kFadeOut;
+	    phase_ = Phase::kFadeOut2;
 	    fade_->Start(Fade::Status::FadeOut, 1.0f);
 
 		break;
@@ -288,6 +288,16 @@ void GameScene::Update()
 			finished1_ = true;
 		}
 		break;
+	case Phase::kFadeOut2:
+		// フェード
+		fade_->Update();
+		if (fade_->IsFinished2()) 
+		{
+			finished2_ = true;
+		}
+		break;
+
+
 	}
 
 	// 自キャラの更新
@@ -432,7 +442,7 @@ void GameScene::CheckAllCollisions()
 	// aabb3 ゴール
 
 	AABB aabb1, aabb2;
-	AABB2 aabb4,aabb3;
+	
 #pragma region 自キャラと敵キャラの当たり判定
 
 	
@@ -459,9 +469,10 @@ void GameScene::CheckAllCollisions()
 	
 
 #pragma region プレイヤーとゴールの当たり判定
-
+	AABB2 aabb4, aabb3;
 	aabb4 = player_->GetAABB2();
-	
+	aabb3 = goal_->GetAABB2();
+	/*
     if (goal_) // nullチェック（推奨）
 	{
 		aabb3 = goal_->GetAABB2();
@@ -471,8 +482,12 @@ void GameScene::CheckAllCollisions()
 			player_->OnCollitionGoal(goal_);
 			goal_->OnCollitionGoal(player_);
 		}
+	}*/
+	if (IsCollitionGoal(aabb4, aabb3))
+	{
+		player_->OnCollitionGoal(goal_);
+		goal_->OnCollitionGoal(player_);
 	}
-	
 
 
 #pragma endregion
@@ -505,6 +520,7 @@ void GameScene::ChangePhase()
 		}
 		else if (player_->IsGoal() == true)
 		{
+			finished2_ = true;
 			phase_ = Phase::kClear;
 			// 自キャラの座標を取得
 			//const KamataEngine::Vector3 deathParticlesPosition = player_->GetWorldPosition();

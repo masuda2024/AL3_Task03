@@ -94,3 +94,20 @@ bool Fade::IsFinished() const
 	}
 	return true;
 }
+
+bool Fade::IsFinished2() const 
+{
+	switch (status_) 
+	{
+	case Fade::Status::FadeIn:
+	case Fade::Status::FadeOut:
+		if (counter_ >= duration_)
+		{
+			return true;
+		} else 
+		{
+			return false;
+		}
+	}
+	return true;
+}

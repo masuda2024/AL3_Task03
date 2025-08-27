@@ -118,6 +118,7 @@ private:
 		kDeath,   // デス演出
 		kClear,
 		kFadeOut, // フェードアウト
+	    kFadeOut2,
 	};
 
 	// ゲームの現在フェーズから開始
