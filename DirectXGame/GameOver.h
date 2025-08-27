@@ -4,7 +4,7 @@
 #include "Fade.h"
 
 #include "Player.h"
-/**/
+#include "Skydome.h"
 class GameOver
 {
 public:
@@ -41,9 +41,15 @@ public:
 	// マップチップフィールド
 	MapChipField* mapChipField_;
 
+	// 天球
+	KamataEngine::Model* modelskydome_ = nullptr;
+	Skydome* skydome_ = nullptr;
+
 private:
 	// 3Dモデルデータ
 	KamataEngine::Model* model_ = nullptr;
+	KamataEngine::Model* modelGameOver_ = nullptr;
+	
 	// モデルプレイヤー
 	KamataEngine::Model* modelPlayer_ = nullptr;
 	// カメラ

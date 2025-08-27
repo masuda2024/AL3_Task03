@@ -33,9 +33,9 @@ void GameScene::Initialize()
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
 
 	// 敵の3Dモデルデータの生成
-	modelEnemy_ = Model::CreateFromOBJ("enemy", true);
+	//modelEnemy_ = Model::CreateFromOBJ("enemy", true);
 	//NEW-ENEMY
-    //modelEnemy_= Model::CreateFromOBJ("robot",true);
+    modelEnemy_= Model::CreateFromOBJ("r",true);
 
 
 
@@ -51,10 +51,10 @@ void GameScene::Initialize()
 
 	// 敵の生成
 	// enemy_ = new Enemy();
-	for (int32_t i = 0; i < 3; i++)
+	for (int32_t i = 0; i < 5; i++)
 	{
 		Enemy* newEnemy = new Enemy();
-		KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i, 16 + i);
+		KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i * 20, 18);
 		newEnemy->Initialize(modelEnemy_, &camera_, enemyPosition);
 
 		enemies_.push_back(newEnemy);
@@ -82,7 +82,7 @@ void GameScene::Initialize()
 
 
 	//ゴールの座標
-	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(30, 18);
+	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(2, 18);
 	goal_->Initialize(modelGoal_, &camera_, goalPosition);
 	goal_->SetMapChipField(mapChipField_);
 
@@ -98,6 +98,8 @@ void GameScene::Initialize()
 	// スカイドームの初期化
 	skydome_->Initialize(modelskydome_, textureHandle_, &camera_);
 
+
+	//ブロックを開く
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	// 表示ブロックの生成
 	GenerateBlocks();
@@ -429,14 +431,14 @@ void GameScene::CheckAllCollisions()
 
 	// aabb3 ゴール
 
-	AABB aabb1, aabb2, aabb3;
-	//AABB aabb1, aabb2;
+	AABB aabb1, aabb2;
+	AABB2 aabb4,aabb3;
 #pragma region 自キャラと敵キャラの当たり判定
 
 	
 
 	aabb1 = player_->GetAABB();
-
+	
 	// 自キャラと敵全ての当たり判定
 	for (Enemy* enemy : enemies_)
 	{
@@ -454,17 +456,17 @@ void GameScene::CheckAllCollisions()
 	}
 #pragma endregion
 
-
+	
 
 #pragma region プレイヤーとゴールの当たり判定
 
-	
+	aabb4 = player_->GetAABB2();
 	
     if (goal_) // nullチェック（推奨）
 	{
-		aabb3 = goal_->GetAABB();
+		aabb3 = goal_->GetAABB2();
 
-		if (IsCollitionGoal(aabb1, aabb3)) 
+		if (IsCollitionGoal(aabb4, aabb3)) 
 		{
 			player_->OnCollitionGoal(goal_);
 			goal_->OnCollitionGoal(player_);
@@ -505,9 +507,7 @@ void GameScene::ChangePhase()
 		{
 			phase_ = Phase::kClear;
 			// 自キャラの座標を取得
-			const KamataEngine::Vector3 deathParticlesPosition = player_->GetWorldPosition();
-
-
+			//const KamataEngine::Vector3 deathParticlesPosition = player_->GetWorldPosition();
 		}
 
 		break;

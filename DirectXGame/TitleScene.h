@@ -59,7 +59,6 @@ public:
 	
 	// 天球
 	KamataEngine::Model* modelskydome_ = nullptr;
-	// キューブ
 	Skydome* skydome_ = nullptr;
 
 private:

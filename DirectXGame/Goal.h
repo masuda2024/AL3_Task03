@@ -28,7 +28,7 @@ public:
 	// ワールド座標を取得
 	KamataEngine::Vector3 GetWorldPosition();
 	// AABBを取得
-	AABB GetAABB();
+	AABB2 GetAABB2();
 	// 衝突応答
 	void OnCollitionGoal(const Player* player);
 

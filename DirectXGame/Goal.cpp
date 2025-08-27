@@ -23,11 +23,11 @@ KamataEngine::Vector3 Goal::GetWorldPosition()
 	return worldPos;
 }
 
-AABB Goal::GetAABB() 
+AABB2 Goal::GetAABB2() 
 {
 	KamataEngine::Vector3 worldPos = GetWorldPosition();
 
-	AABB aabb;
+	AABB2 aabb;
 
 	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
 	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};

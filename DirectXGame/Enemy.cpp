@@ -24,11 +24,25 @@ void Enemy::Initialize(Model* model, Camera* camera, KamataEngine::Vector3& posi
 	camera_ = camera;
 
 	// 速度を設定する
+	//進行方向(左)
 	velocity_ = {-kWalkSpeed, 0, 0};
+	//進行方向(右)
+	//velocity_ = {kWalkSpeed, 0, 0};
+
 
 	walkTimer_ = 0.0f;
-
+	
+	
+	
+	
+	
+	
+	//方向(左)
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> / -2.0f;
+
+	// 方向(右)
+	//worldTransform_.rotation_.y = std::numbers::pi_v<float> / 2.0f;
+
 
 	worldTransform_.Initialize();
 }

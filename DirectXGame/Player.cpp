@@ -74,12 +74,12 @@ void Player::InputMove()
 	// 左右移動操作
 	if (onGround_) 
 	{
-		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT)) 
+		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) 
 		{
 
 			// 左右加速
 			Vector3 acceleration = {};
-			if (Input::GetInstance()->PushKey(DIK_RIGHT)) 
+			if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_D)) 
 			{
 				// 左移動中の右入力
 				if (velocity_.x < 0.0f)
@@ -96,7 +96,7 @@ void Player::InputMove()
 					// 旋回タイマーに時間を設定する
 					trunTimer_ = kTimeTurn;
 				}
-			} else if (Input::GetInstance()->PushKey(DIK_LEFT))
+			} else if (Input::GetInstance()->PushKey(DIK_LEFT)|| Input::GetInstance()->PushKey(DIK_A))
 			{
 				// 右移動中の左入力
 				if (velocity_.x > 0.0f)
@@ -124,7 +124,7 @@ void Player::InputMove()
 			// 非入力時は移動減衰をかける
 			velocity_.x *= (1.0f - kAccleration);
 		}
-		if (Input::GetInstance()->PushKey(DIK_UP))
+		if (Input::GetInstance()->PushKey(DIK_UP) || Input::GetInstance()->PushKey(DIK_SPACE))
 		{
 			// ジャンプ初速
 			velocity_ += Vector3(0, kJumpAcceleration, 0);
@@ -529,6 +529,19 @@ AABB Player::GetAABB()
 
 	return aabb;
 }
+
+AABB2 Player::GetAABB2() 
+{
+	KamataEngine::Vector3 worldPos = GetWorldPosition();
+
+	AABB2 aabb;
+
+	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
+	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};
+
+	return aabb;
+}
+
 
 //敵との衝突応答
 void Player::OnCollition(const Enemy* enemy) 

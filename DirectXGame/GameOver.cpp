@@ -1,6 +1,6 @@
 #include "GameOver.h"
 #include "MapChipField.h"
-
+#include "Skydome.h"
 
 using namespace KamataEngine;
 
@@ -10,6 +10,15 @@ void GameOver::Initialize()
 	// 3Dモデルの生成
 	// model_ = Model::CreateFromOBJ("titleFont");
 	// modelPlayer_ = Model::CreateFromOBJ("player");
+	modelGameOver_ = Model::CreateFromOBJ("GAMEOVERFont");
+	model_ = Model::CreateFromOBJ("SPACE_UI");
+	// スカイドームの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	skydome_ = new Skydome();
+	
+	
+	
+	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -61,8 +70,12 @@ void GameOver::Draw()
 	Model::PreDraw();
 
 	// ここに3Dモデルインスタンスの描画処理を記述する
-	// model_->Draw(worldTransform_, camera_);
+	modelGameOver_->Draw(worldTransform_, camera_);
+	model_->Draw(worldTransform_, camera_);
 	// modelPlayer_->Draw(worldTransformPlayer_, camera_);
+
+	modelskydome_->Draw(worldTransformPlayer_, camera_);
+
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
@@ -73,8 +86,10 @@ void GameOver::Draw()
 GameOver::~GameOver() 
 {
 	// モデル
+	delete modelGameOver_;
 	delete model_;
 	delete modelPlayer_;
+	delete skydome_;
 	// フェード
 	delete fade_;
 }

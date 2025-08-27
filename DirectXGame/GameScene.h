@@ -90,6 +90,7 @@ private:
 
 	// 敵
 	KamataEngine::Model* modelEnemy_ = nullptr;
+	//KamataEngine::Model* modelEnemy2_ = nullptr;
 	// 敵(複数)
 	// Enemy* enemy_ = nullptr;
 	std::list<Enemy*> enemies_;

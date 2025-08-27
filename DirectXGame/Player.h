@@ -112,6 +112,7 @@ public:
 	KamataEngine::Vector3 GetWorldPosition();
 	// AABBを取得
 	AABB GetAABB();
+	AABB2 GetAABB2();
 	// 衝突応答
 	void OnCollition(const Enemy* enemy);
 

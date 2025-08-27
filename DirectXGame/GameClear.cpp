@@ -9,6 +9,9 @@ void GameClear::Initialize()
 	// 3Dモデルの生成
 	// model_ = Model::CreateFromOBJ("titleFont");
 	// modelPlayer_ = Model::CreateFromOBJ("player");
+	modelGameClear_ = Model::CreateFromOBJ("GAMECLEARFont");
+	model_ = Model::CreateFromOBJ("SPACE_UI");
+	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -59,7 +62,9 @@ void GameClear::Draw()
 	Model::PreDraw();
 
 	// ここに3Dモデルインスタンスの描画処理を記述する
-	// model_->Draw(worldTransform_, camera_);
+	modelGameClear_->Draw(worldTransform_, camera_);
+	model_->Draw(worldTransform_, camera_);
+	
 	// modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 	// 3Dモデル描画後処理
@@ -71,6 +76,7 @@ void GameClear::Draw()
 GameClear::~GameClear()
 {
 	// モデル
+	delete modelGameClear_;
 	delete model_;
 	delete modelPlayer_;
 	// フェード

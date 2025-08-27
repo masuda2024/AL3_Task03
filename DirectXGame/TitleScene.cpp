@@ -8,11 +8,12 @@ using namespace KamataEngine;
 void TitleScene::Initialize()
 {
 	// 3Dモデルの生成
-	model_ = Model::CreateFromOBJ("titleFont");
+	model_ = Model::CreateFromOBJ("titleFont02");
 	modelPlayer_ = Model::CreateFromOBJ("player");
 	// 3Dモデルの生成
-	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	
 	// スカイドームの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
 	skydome_ = new Skydome();
 
 	// スカイドームの初期化
