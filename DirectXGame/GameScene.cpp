@@ -282,16 +282,7 @@ void GameScene::Update()
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
 		}
 
-		/*
-		if ("deathParticle", true)
-		{
-		    // フェードアウト開始
-		    phase_ = Phase::kFadeOut;
-		    fade_->Start(Fade::Status::FadeOut, 1.0f);
-		    deathParticles_->Update();
-		    finished_ = deathParticles_->isFinished_;
-		}
-		*/
+		
 
 		break;
 
