@@ -35,23 +35,18 @@ public:
 	// スプライト
 	KamataEngine::Sprite* sprite_ = nullptr;
 
-	// 自キャラ
-	Player* player_ = nullptr;
+	
 
 	// マップチップフィールド
 	MapChipField* mapChipField_;
 
-	// 天球
-	KamataEngine::Model* modelskydome_ = nullptr;
-	Skydome* skydome_ = nullptr;
+	
 
 private:
 	// 3Dモデルデータ
 	KamataEngine::Model* model_ = nullptr;
 	
-	KamataEngine::Model* modelTutorialUI_ = nullptr;
-	// モデルプレイヤー
-	KamataEngine::Model* modelPlayer_ = nullptr;
+	
 	// カメラ
 	KamataEngine::Camera camera_;
 	// ワールドトランスフォーム
@@ -64,4 +59,10 @@ private:
 	Phase phase_ = Phase::kFadeIn;
 
 	uint32_t Botan_ = 0;
+
+
+	uint32_t tutorialHandle_ = 0;
+	KamataEngine::Sprite* tutorialSprite_ = nullptr;
+;
+
 };

@@ -172,28 +172,17 @@ void ChangeScene()
 		if (titleScene->IsFinished())
 		{
 			// シーンの変更
-			scene = Scene::kGame;
 			
-			// 旧シーンの解放
-			delete titleScene;
-			titleScene = nullptr;
-			
-			// 新シーンの生成と初期化
-			gameScene = new GameScene();
-			gameScene->Initialize();
-		} //チュートリアルシーンへ
-		else if (titleScene->IsFinished2())
-		{
-			// シーンの変更
 			scene = Scene::kTutorial;
 
 			// 旧シーンの解放
 			delete titleScene;
 			titleScene = nullptr;
-
+			
 			// 新シーンの生成と初期化
 			tutorial = new Tutorial();
 			tutorial->Initialize();
+			
 		}
 
 
@@ -203,15 +192,16 @@ void ChangeScene()
 		if (tutorial->IsFinishedTutorial())
 		{
 			// シーンの変更
-			scene = Scene::kTitle;
+			scene = Scene::kGame;
 			
 			// 旧シーンの解放
 			delete tutorial;
 			tutorial = nullptr;
 			
-			// タイトルシーンの生成と初期化
-			titleScene = new TitleScene;
-			titleScene->Initialize();
+			
+			// 新シーンの生成と初期化
+			gameScene = new GameScene();
+			gameScene->Initialize();
 		}
 		break;
 	case Scene::kGame:

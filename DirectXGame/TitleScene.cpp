@@ -7,38 +7,23 @@ using namespace KamataEngine;
 //初期化
 void TitleScene::Initialize()
 {
-	// 3Dモデルの生成
-	model_ = Model::CreateFromOBJ("titleFont02");
-	modelTitle_UI_ = Model::CreateFromOBJ("Title_UI");
 	
-	//modelPlayer_ = Model::CreateFromOBJ("Player03");
-	// 3Dモデルの生成
-	
-	// スカイドームの生成
-	modelskydome_ = Model::CreateFromOBJ("skydome", true);
-	skydome_ = new Skydome();
 
-	// スカイドームの初期化
-	skydome_->Initialize(modelskydome_, textureHandle_, &camera_);
-	
 	
 	// Springin ボタン・システム　決定1
 	Botan_ = Audio::GetInstance()->LoadWave("Sounds/Decision1.mp3");
 
-	modelCredit_ = Model::CreateFromOBJ("Credit");
 	
+	titleHandle_ = TextureManager::Load("Title.png");
+	titleSprite_ = Sprite::Create(titleHandle_, {0, 0});
 	
-	/*(仮設コード)
-	modelGameOver_ = Model::CreateFromOBJ("overFont");
-	modelGameClear_ = Model::CreateFromOBJ("clearFont");
-	*/
 	
 	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
-	worldTransformPlayer_.Initialize();
+	
 
 	// フェード
 	fade_ = new Fade();
@@ -66,18 +51,6 @@ void TitleScene::Update()
 			
 		}
 
-		//Tを押してチュートリアルシーンへ分岐
-		if (Input::GetInstance()->PushKey(DIK_E)) 
-		{
-			Audio::GetInstance()->PlayWave(Botan_);
-
-			// フェードアウト開始
-			phase_ = Phase::kFadeOut;
-			fade_->Start(Fade::Status::FadeOut, 1.0f);
-
-			finished2_ = true;
-		}
-
 
 		break;
 	case Phase::kFadeIn:
@@ -98,46 +71,26 @@ void TitleScene::Update()
 		break;
 	}
 
-	/*
-	// タイトルシーンの終了条件
-	if (Input::GetInstance()->PushKey(DIK_SPACE))
-	{
-	    finished_ = true;
-	}
-	// フェード
-	fade_->Update();
-	*/
-	/*
-	// 自キャラの更新
-	player_->Update();
-	*/
+	
 
-	skydome_->Update();
+	
 }
 
 
 //描画
 void TitleScene::Draw() 
 {
-	// DirectXCommonインスタンスの取得
-	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	
 
-	// 3Dモデル描画前処理
-	Model::PreDraw();
+	Sprite::PreDraw();
 
-	// ここに3Dモデルインスタンスの描画処理を記述する
-	model_->Draw(worldTransform_, camera_);
-	modelTitle_UI_->Draw(worldTransform_, camera_);
-	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
+	titleSprite_->Draw();
 
-	modelCredit_->Draw(worldTransform_, camera_);
+	Sprite::PostDraw();
 
 
-	modelskydome_->Draw(worldTransformPlayer_, camera_);
 
-	// 3Dモデル描画後処理
-	Model::PostDraw();
+	
 	// フェード
 	fade_->Draw();
 }
@@ -147,12 +100,12 @@ TitleScene::~TitleScene()
 {
 	// モデル
 	delete model_;
-	delete modelTitle_UI_;
-	//delete modelPlayer_;
+	
+
+	delete titleSprite_;
+
+
 	// フェード
 	delete fade_;
 
-	delete skydome_;
-
-	delete modelCredit_;
 }

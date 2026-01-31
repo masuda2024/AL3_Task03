@@ -12,103 +12,100 @@ using namespace KamataEngine;
 // 初期化
 void GameScene::Initialize() 
 {
-	// h(ヘッターファイル)にいれる
-
-	// textureHandle_ = TextureManager::Load("Fruuits.png");
-
-
-	// Springin 戦闘-4 爆発1
-	Explosion_ = Audio::GetInstance()->LoadWave("Sounds/Explosion_1.mp3");
 	
-	
-
-
-
-
 	// ゲームプレイフェーズから開始
 	phase_ = Phase::kPlay;
 
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
 
-	// 3Dモデルの生成
-	modelskydome_ = Model::CreateFromOBJ("skydome", true);
 
-	// デバックカメラの生成
-	debugCamera_ = new DebugCamera(100, 200);
-
+	// Springin 戦闘-4 爆発1
+	Explosion_ = Audio::GetInstance()->LoadWave("Sounds/Explosion_1.mp3");
+	
 	cube_ = Model::CreateFromOBJ("block");
+
+	// マップチップフィールドの生成
+	mapChipField_ = new MapChipField;
+
+	// ブロックを開く
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+	// 表示ブロックの生成
+	GenerateBlocks();
+
+	#pragma region プレイヤー
+
 
 	// 3Dモデルデータの生成
 	modelPlayer_ = Model::CreateFromOBJ("Player003", true);
 
-	// 敵の3Dモデルデータの生成
-	//modelEnemy_ = Model::CreateFromOBJ("enemy", true);
-	//NEW-ENEMY
-    modelEnemy_= Model::CreateFromOBJ("r",true);
-
-
-
 	// playerHPのスプライト
 	playerhpHandle_ = TextureManager::Load("hp.png");
 	playerhpSprite_ = KamataEngine::Sprite::Create(playerhpHandle_, {0, 0});
-
-
-
-	//ゴール
-	modelGoal_ = Model::CreateFromOBJ("goal", true);
-
+	
 	// パーティクルの3Dモデルデータの生成
 	modelParticle_ = Model::CreateFromOBJ("deathParticle", true);
 
 	// 自キャラの生成
 	player_ = new Player();
 
-	// 敵の生成
-	// enemy_ = new Enemy();
-	for (int32_t i = 0; i < 5; i++)
-	{
-		for (int32_t j = 0; j < 3; j++)
-		{
-		Enemy* newEnemy = new Enemy();
-			KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i * 20, 18 - j * 3);
-		newEnemy->Initialize(modelEnemy_, &camera_, enemyPosition);
-
-		enemies_.push_back(newEnemy);
-		}
-	}
-
-
-
-	//ゴールの生成
-	goal_ = new Goal();
-
-
-	// マップチップフィールドの生成
-	mapChipField_ = new MapChipField;
-
 	// 座標をマップチップ番号で指定
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1, 18);
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 	player_->SetMapChipField(mapChipField_); // 自キャラの生成と初期化
 
-	/**/
+	
 	// パーティクル
 	deathParticles_ = new DeathParticle();
 	deathParticles_->Initialize(modelParticle_, &camera_, playerPosition);
 
 
+	#pragma endregion
 
-	//ゴールの座標
+
+	#pragma region 敵
+
+
+	modelEnemy_ = Model::CreateFromOBJ("r", true);
+
+	// 敵の生成
+	// enemy_ = new Enemy();
+	for (int32_t i = 0; i < 5; i++) 
+	{
+		for (int32_t j = 0; j < 3; j++)
+		{
+			Enemy* newEnemy = new Enemy();
+			KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i * 20, 18 - j * 3);
+			newEnemy->Initialize(modelEnemy_, &camera_, enemyPosition);
+
+			enemies_.push_back(newEnemy);
+		}
+	}
+
+	#pragma endregion
+
+	#pragma region ゴール
+
+
+	// ゴール
+	modelGoal_ = Model::CreateFromOBJ("goal", true);
+	// ゴールの生成
+	goal_ = new Goal();
+	// ゴールの座標
 	Vector3 goalPosition = mapChipField_->GetMapChipPositionByIndex(80, 18);
 	goal_->Initialize(modelGoal_, &camera_, goalPosition);
 	goal_->SetMapChipField(mapChipField_);
 
-	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
 
-	// カメラの初期化
-	camera_.Initialize();
 
+	#pragma endregion
+
+
+
+
+	
+	// 3Dモデルの生成
+	modelskydome_ = Model::CreateFromOBJ("skydome", true);
+	
 	// スカイドームの生成
 	skydome_ = new Skydome();
 
@@ -116,14 +113,24 @@ void GameScene::Initialize()
 	skydome_->Initialize(modelskydome_, textureHandle_, &camera_);
 
 
-	//ブロックを開く
-	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
-	// 表示ブロックの生成
-	GenerateBlocks();
 
-	// 自キャラの初期化
-	// player_->Initialize(modelPlayer_,&camera_,playerPosition);
 
+
+	
+	
+
+
+	
+	// ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+
+
+	// デバックカメラの生成
+	debugCamera_ = new DebugCamera(100, 200);
+
+
+	// カメラの初期化
+	camera_.Initialize();
 	// カメラコントローラの初期化
 	cameraController_ = new CameraController;
 	cameraController_->Initialize();
@@ -133,8 +140,7 @@ void GameScene::Initialize()
 	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
 	cameraController_->SetMovableArea(cameraArea);
 
-	// マップチップフィールドの生成と初期化
-
+	
 	// フェーズインから開始
 	phase_ = Phase::kFadeIn;
 

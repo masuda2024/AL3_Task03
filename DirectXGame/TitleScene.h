@@ -18,23 +18,15 @@ public:
 	//==========終了フラグ==========//
 
 
-	//ゲームシーン移行前
-	bool finished_ = false;
 	// チュートリアルシーン移行前
-	bool finished2_ = false;
-
+	bool finished_ = false;
+	
+	
 
 
 	// タイトルシーンを終了
 	bool IsFinished() const { return finished_; }
 	
-	bool IsFinished2() const { return finished2_; }
-	
-
-
-	//==========処理==========//
-
-
 
 	void Initialize();
 	void Update();
@@ -51,30 +43,25 @@ public:
 	// スプライト
 	KamataEngine::Sprite* sprite_ = nullptr;
 
-	// 自キャラ
-	Player* player_ = nullptr;
-
+	
 	// マップチップフィールド
 	MapChipField* mapChipField_;
 	
-	// 天球
-	KamataEngine::Model* modelskydome_ = nullptr;
-	Skydome* skydome_ = nullptr;
-
+	
 private:
 	// 3Dモデルデータ
 	KamataEngine::Model* model_ = nullptr;
-	KamataEngine::Model* modelTitle_UI_ = nullptr;
-	KamataEngine::Model* modelCredit_ = nullptr;
 	
-
-	// モデルプレイヤー
-	KamataEngine::Model* modelPlayer_ = nullptr;
 	// カメラ
 	KamataEngine::Camera camera_;
 	// ワールドトランスフォーム
 	KamataEngine::WorldTransform worldTransform_;
-	KamataEngine::WorldTransform worldTransformPlayer_;
+	
+
+	uint32_t titleHandle_ = 0;
+	KamataEngine::Sprite* titleSprite_ = nullptr;
+
+
 
 	// フェード
 	Fade* fade_ = nullptr;
