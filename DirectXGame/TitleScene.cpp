@@ -22,7 +22,10 @@ void TitleScene::Initialize()
 	skydome_->Initialize(modelskydome_, textureHandle_, &camera_);
 	
 	
-	
+	// Springin ボタン・システム　決定1
+	Botan_ = Audio::GetInstance()->LoadWave("Sounds/Decision1.mp3");
+
+	modelCredit_ = Model::CreateFromOBJ("Credit");
 	
 	
 	/*(仮設コード)
@@ -53,6 +56,8 @@ void TitleScene::Update()
 		// タイトルシーンの終了条件
 		if (Input::GetInstance()->PushKey(DIK_SPACE))
 		{
+			Audio::GetInstance()->PlayWave(Botan_);
+
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
@@ -64,6 +69,8 @@ void TitleScene::Update()
 		//Tを押してチュートリアルシーンへ分岐
 		if (Input::GetInstance()->PushKey(DIK_E)) 
 		{
+			Audio::GetInstance()->PlayWave(Botan_);
+
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
@@ -124,6 +131,9 @@ void TitleScene::Draw()
 	modelTitle_UI_->Draw(worldTransform_, camera_);
 	//modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
+	modelCredit_->Draw(worldTransform_, camera_);
+
+
 	modelskydome_->Draw(worldTransformPlayer_, camera_);
 
 	// 3Dモデル描画後処理
@@ -143,4 +153,6 @@ TitleScene::~TitleScene()
 	delete fade_;
 
 	delete skydome_;
+
+	delete modelCredit_;
 }

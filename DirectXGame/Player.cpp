@@ -18,6 +18,13 @@ void Player::Initialize(Model* model, Camera* camera, KamataEngine::Vector3& pos
 
 	model_ = model;
 
+
+
+	// Springin 戦闘-4 破壊音短い
+	Destruction_ = Audio::GetInstance()->LoadWave("Sounds/DestructionSound_short.mp3");
+
+
+
 	// textureHandle_ = textureHandle;
 
 	worldTransform_.translation_ = position;
@@ -74,6 +81,9 @@ void Player::InputMove()
 	// 左右移動操作
 	if (onGround_) 
 	{
+		atAir = false;
+		jumpCount_ = 0;
+
 		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) 
 		{
 
@@ -133,10 +143,105 @@ void Player::InputMove()
 	// 空中
 	else
 	{
+		// 2段ジャンプ
+		if (jumpCount_ < MaxJump_ && Input::GetInstance()->TriggerKey(DIK_UP) || Input::GetInstance()->TriggerKey(DIK_SPACE)) 
+		{
+			// ジャンプ初速
+			velocity_ += Vector3(0, kJumpAcceleration * 2.0f, 0);
+			jumpCount_ += 1;
+		}
+
+#pragma region 左右移動
+
+		// 左右加速
+		Vector3 acceleration = {};
+
+		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_D)) 
+		{
+			// 左移動中の右入力
+			if (velocity_.x < 0.0f) 
+			{
+				// 速度と逆方向に入力中は急ブレーキ
+				velocity_.x *= (1.0f - kAttenuation);
+			}
+			acceleration.x += kAccleration;
+			if (lrDirection_ != LRDirection::kRight)
+			{
+				lrDirection_ = LRDirection::kRight;
+				// 旋回開始時の角度を記録する
+				trunFirstRotationY_ = worldTransform_.rotation_.y;
+				// 旋回タイマーに時間を設定する
+				trunTimer_ = kTimeTurn;
+			}
+		}
+		else if (Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_A)) 
+		{
+			// 右移動中の左入力
+			if (velocity_.x > 0.0f)
+			{
+				// 速度と逆方向に入力中は急ブレーキ
+				velocity_.x *= (1.0f - kAttenuation);
+			}
+			acceleration.x -= kAccleration;
+			if (lrDirection_ != LRDirection::kLeft) 
+			{
+				lrDirection_ = LRDirection::kLeft;
+				// 旋回開始時の角度を記録する
+				trunFirstRotationY_ = worldTransform_.rotation_.y;
+				// 旋回タイマーに時間を設定する
+				trunTimer_ = kTimeTurn;
+			}
+		}
+
 		// 落下速度
 		velocity_ += Vector3(0, -kGravityAcceleration, 0);
 		// 落下速度制限
 		velocity_.y = max(velocity_.y, -kLimitFallSpeed);
+
+#pragma endregion
+
+	}
+	if (atAir == 1) 
+	{
+		// 左右加速
+		Vector3 acceleration = {};
+
+		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_D))
+		{
+			// 左移動中の右入力
+			if (velocity_.x < 0.0f)
+			{
+				// 速度と逆方向に入力中は急ブレーキ
+				velocity_.x *= (1.0f - kAttenuation);
+			}
+			acceleration.x += kAccleration;
+			if (lrDirection_ != LRDirection::kRight) 
+			{
+				lrDirection_ = LRDirection::kRight;
+				// 旋回開始時の角度を記録する
+				trunFirstRotationY_ = worldTransform_.rotation_.y;
+				// 旋回タイマーに時間を設定する
+				trunTimer_ = kTimeTurn;
+			}
+		} 
+		else if (Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_A)) 
+		{
+			// 右移動中の左入力
+			if (velocity_.x > 0.0f) 
+			{
+				// 速度と逆方向に入力中は急ブレーキ
+				velocity_.x *= (1.0f - kAttenuation);
+			}
+			acceleration.x -= kAccleration;
+			if (lrDirection_ != LRDirection::kLeft) 
+			{
+				lrDirection_ = LRDirection::kLeft;
+				// 旋回開始時の角度を記録する
+				trunFirstRotationY_ = worldTransform_.rotation_.y;
+				// 旋回タイマーに時間を設定する
+				trunTimer_ = kTimeTurn;
+			}
+		}
 	}
 }
 
@@ -548,8 +653,19 @@ void Player::OnCollition(const Enemy* enemy)
 {
 	(void)enemy;
 
-	// デスフラグを立てる
-	isDead_ = true;
+
+	Audio::GetInstance()->PlayWave(Destruction_);
+	 // ここで受けるダメージ量を決定（例: 1）
+	const int damage = 1;
+
+	hp_ -= damage;
+	if (hp_ <= 0)
+	{
+		hp_ = 0;
+		isDead_ = true;
+		// 必要なら死亡時の処理（アニメ・音・フラグ等）
+	}
+
 
 	// ジャンプ開始
 	// velocity_ += KamataEngine::Vector3(0, kJumpAcceleration, 0);

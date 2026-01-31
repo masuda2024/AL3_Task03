@@ -8,6 +8,15 @@ class Goal;
 class Player 
 {
 public:
+
+
+
+	// Getter / 状態確認
+	int GetHP() const { return hp_; }
+	int GetMaxHP() const { return maxHP_; }
+
+
+
 	// デスフラグ
 	bool isDead_ = false;
 	// デスフラグのgetter
@@ -147,4 +156,18 @@ private:
 	KamataEngine::Model* model_;
 
 	KamataEngine::Vector3 velocity_ = {};
+
+
+	// 現在のジャンプ回数
+	int jumpCount_ = 0;
+
+	// 最大ジャンプ数
+	int MaxJump_ = 2;
+
+	int atAir = false;
+
+	int maxHP_ = 50;
+	int hp_ = maxHP_;
+
+	uint32_t Destruction_ = 0;
 };

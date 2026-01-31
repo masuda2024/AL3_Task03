@@ -16,6 +16,15 @@ void GameScene::Initialize()
 
 	// textureHandle_ = TextureManager::Load("Fruuits.png");
 
+
+	// Springin 戦闘-4 爆発1
+	Explosion_ = Audio::GetInstance()->LoadWave("Sounds/Explosion_1.mp3");
+	
+	
+
+
+
+
 	// ゲームプレイフェーズから開始
 	phase_ = Phase::kPlay;
 
@@ -39,6 +48,11 @@ void GameScene::Initialize()
 
 
 
+	// playerHPのスプライト
+	playerhpHandle_ = TextureManager::Load("hp.png");
+	playerhpSprite_ = KamataEngine::Sprite::Create(playerhpHandle_, {0, 0});
+
+
 
 	//ゴール
 	modelGoal_ = Model::CreateFromOBJ("goal", true);
@@ -53,11 +67,14 @@ void GameScene::Initialize()
 	// enemy_ = new Enemy();
 	for (int32_t i = 0; i < 5; i++)
 	{
+		for (int32_t j = 0; j < 3; j++)
+		{
 		Enemy* newEnemy = new Enemy();
-		KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i * 20, 18);
+			KamataEngine::Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(32 + i * 20, 18 - j * 3);
 		newEnemy->Initialize(modelEnemy_, &camera_, enemyPosition);
 
 		enemies_.push_back(newEnemy);
+		}
 	}
 
 
@@ -210,6 +227,14 @@ void GameScene::Update()
 	// フェード
 	fade_->Update();
 
+	// プレイヤーHP
+	float hpRatio = (float)player_->GetHP() / (float)player_->GetMaxHP();
+	hpRatio = std::clamp(hpRatio, 0.0f, 1.0f);
+	playerhpSprite_->SetSize({hpRatio * 200.0f, 20.0f}); // 例：幅200px、高さ20px
+	playerhpSprite_->SetPosition({0, 0});                // 左上に表示
+
+
+
 	switch (phase_) 
 	{
 	case Phase::kPlay:
@@ -220,6 +245,7 @@ void GameScene::Update()
 		// ゲームプレイフェーズの処理
 		if (player_->IsDead() == true)
 		{
+			Audio::GetInstance()->PlayWave(Explosion_);
 			// デス演出フェーズに切り替え
 			phase_ = Phase::kDeath;
 
@@ -425,6 +451,12 @@ void GameScene::Draw()
 
 	// 3Dモデル描画前処理
 	Model::PostDraw(); // プログラムの終了
+
+	// HPバーの描画
+	Sprite::PreDraw();
+	playerhpSprite_->Draw();
+	Sprite::PostDraw();
+
 
 	// フェード
 	fade_->Draw();

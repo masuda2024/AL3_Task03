@@ -44,7 +44,7 @@ GameClear* gameclear = nullptr;
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
-	KamataEngine::Initialize(L"LE2D_21_マスダ_アキヒロ_ロボットの冒険");
+	KamataEngine::Initialize(L"LE2D_19_マスダ_アキヒロ_ロボットの冒険2");
 
 	
 

@@ -9,6 +9,8 @@
 #include "Skydome.h"
 #include <vector>
 #include"Goal.h"
+#include <algorithm>
+
 // ゲームシーン
 
 class GameScene
@@ -74,6 +76,13 @@ private:
 	// モデルプレイヤー
 	KamataEngine::Model* modelPlayer_ = nullptr;
 
+
+	// プレイヤーHPテクスチャハンドル
+	uint32_t playerhpHandle_ = 0;
+	// スプライト
+	Sprite* playerhpSprite_ = nullptr;
+
+
 	// 天球
 	KamataEngine::Model* modelskydome_ = nullptr;
 
@@ -110,6 +119,12 @@ private:
 	// モデルパーティクル
 	DeathParticle* deathParticles_ = nullptr;
 
+
+	
+
+
+
+
 	// ゲームのフェーズ(型)
 	enum class Phase 
 	{
@@ -131,4 +146,8 @@ private:
 
 	// フェード
 	Fade* fade_ = nullptr;
+
+
+	
+	uint32_t Explosion_ = 0;
 };

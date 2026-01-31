@@ -65,7 +65,9 @@ private:
 	// 3Dモデルデータ
 	KamataEngine::Model* model_ = nullptr;
 	KamataEngine::Model* modelTitle_UI_ = nullptr;
+	KamataEngine::Model* modelCredit_ = nullptr;
 	
+
 	// モデルプレイヤー
 	KamataEngine::Model* modelPlayer_ = nullptr;
 	// カメラ
@@ -78,4 +80,6 @@ private:
 	Fade* fade_ = nullptr;
 	// 現在のフェーズ
 	Phase phase_ = Phase::kFadeIn;
+
+	uint32_t Botan_ = 0;
 };

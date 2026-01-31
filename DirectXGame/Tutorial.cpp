@@ -18,6 +18,10 @@ void Tutorial::Initialize()
 	
 	modelTutorialUI_ = Model::CreateFromOBJ("TutorialUI");
 	
+	// Springin ボタン・システム　決定1
+	Botan_ = Audio::GetInstance()->LoadWave("Sounds/Decision1.mp3");
+
+
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
@@ -38,6 +42,7 @@ void Tutorial::Update()
 		// チュートリアルシーンの終了条件
 		if (Input::GetInstance()->PushKey(DIK_E))
 		{
+			Audio::GetInstance()->PlayWave(Botan_);
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);

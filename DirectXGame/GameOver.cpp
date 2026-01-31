@@ -17,7 +17,9 @@ void GameOver::Initialize()
 	skydome_ = new Skydome();
 	
 	
-	
+	// Springin ボタン・システム　決定1
+	Botan_ = Audio::GetInstance()->LoadWave("Sounds/Decision1.mp3");
+
 	
 	// カメラの初期化
 	camera_.Initialize();
@@ -39,6 +41,7 @@ void GameOver::Update()
 		// チュートリアルシーンの終了条件
 		if (Input::GetInstance()->PushKey(DIK_SPACE))
 		{
+			Audio::GetInstance()->PlayWave(Botan_);
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);

@@ -62,4 +62,6 @@ private:
 	Fade* fade_ = nullptr;
 	// 現在のフェーズ
 	Phase phase_ = Phase::kFadeIn;
+
+	uint32_t Botan_ = 0;
 };
